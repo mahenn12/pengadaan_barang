@@ -23,6 +23,15 @@
         <a href="{{ route('transaksi-pengadaan.index') }}" class="btn btn-default" style="float: right;"><span class="fa fa-arrow-left">&nbsp;</span> Kembali</a>
     </div>
     <div class="panel-body">
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
         <div class="col-md-12">
             <form role="form" action="{{ route('transaksi-pengadaan.store') }}" method="post" enctype="multipart/form-data">
             @csrf
