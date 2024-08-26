@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Session;
 
-class satuan extends Model
+class Satuan extends Model
 {
     use HasFactory;
     protected $fillable =

@@ -11,15 +11,17 @@ class TransaksiPermintaan extends Model
 
     protected $table = 'transaksi_permintaan';
 
-    protected $fillable = [
-        'tgl_permintaan',
-        'barang_id',
-        'jumlah_minta',
-        'total',
-        'pelanggan',
-        'keterangan',
-        'status_permintaan',
-    ];
+    // protected $fillable = [
+    //     'tgl_permintaan',
+    //     'barang_id',
+    //     'jumlah_minta',
+    //     'total',
+    //     'pelanggan',
+    //     'keterangan',
+    //     'status_permintaan',
+    // ];
+
+    protected $guarded = [];
 
     public function barang()
     {

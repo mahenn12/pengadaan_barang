@@ -24,7 +24,7 @@ class UserSeeder extends Seeder
 
         $petugasRole = new role();
         $petugasRole->name = "petugas";
-        $petugasRole->display_name = "Petugas";
+        $petugasRole->display_name = "Staff Pengadaan";
         $petugasRole->save();
 
         //membuat sample user
@@ -36,9 +36,9 @@ class UserSeeder extends Seeder
         $admin->attachRole($adminRole);
 
         $petugas = new User();
-        $petugas->name = "Petugas";
-        $petugas->email = "petugas@gmail.com";
-        $petugas->password = bcrypt('12345678');
+        $petugas->name = "Staff Pengadaan";
+        $petugas->email = "staffpengadaan@gmail.com";
+        $petugas->password = Hash::make('12345678');
         $petugas->save();
         $petugas->attachRole($petugasRole);
 

@@ -16,6 +16,13 @@ class TransaksiPermintaanController extends Controller
         return view('admin.transaksi-permintaan.index', compact('permintaan'));
     }
 
+    public function cetaktm()
+    {
+        $permintaan = TransaksiPermintaan::all(); // Ambil semua data transaksi permintaan
+        $pdf = \PDF::loadview('admin.cetak-laporan.cetak-tm', ['permintaan' => $permintaan]);
+        return $pdf->download('laporan-transaksi-permintaan.pdf');
+    }
+
     public function create()
     {
         $barang = Barang::all(); // Ambil semua data barang
@@ -66,16 +73,53 @@ class TransaksiPermintaanController extends Controller
 
     public function edit($id)
     {
-        // Logic to show the edit form
+        // Ambil transaksi berdasarkan ID
+        $transaksi = TransaksiPermintaan::findOrFail($id); // Menggunakan findOrFail untuk menangani jika tidak ditemukan
+
+        // Ubah format tanggal menjadi objek Carbon
+        $transaksi->tgl_permintaan = Carbon::parse($transaksi->tgl_permintaan);
+
+        // Ambil data barang dan supplier untuk dropdown
+        $barang = Barang::all(); // Ambil semua data barang
+        $suppliers = Supplier::all(); // Ambil semua data supplier
+
+        // Kembalikan view dengan data yang diperlukan
+        return view('admin.transaksi-permintaan.edit', compact('transaksi', 'barang', 'suppliers'));
     }
 
     public function update(Request $request, $id)
     {
-        // Logic to update the transaction
+        // Validasi input
+        $validated = $request->validate([
+            'tanggal_permintaan' => 'required|date',
+            'barang' => 'required|exists:barangs,id',
+            'jumlah_minta' => 'required|integer|min:1',
+            'pelanggan' => 'required|exists:suppliers,id',
+            'keterangan' => 'nullable|string',
+            'status_permintaan' => 'required|string|max:255',
+        ]);
+
+        // Temukan barang untuk menghitung total
+        $barang = Barang::findOrFail($request->barang);
+        $validated['total_permintaan'] = $barang->harga_jual * $request->jumlah_minta; // Hitung total permintaan
+
+        // Temukan transaksi dan perbarui
+        $transaksi = TransaksiPermintaan::findOrFail($id);
+        $transaksi->update(array_merge($validated, [
+            'barang_id' => $request->barang,
+        ]));
+
+        return redirect()->route('transaksi-permintaan.index')->with('success', 'Data berhasil diperbarui.');
     }
 
     public function destroy($id)
     {
-        // Logic to delete the transaction
+        // Temukan transaksi berdasarkan ID
+        $transaksi = TransaksiPermintaan::findOrFail($id);
+
+        // Hapus transaksi
+        $transaksi->delete();
+
+        return redirect()->route('transaksi-permintaan.index')->with('success', 'Data berhasil dihapus.');
     }
 }

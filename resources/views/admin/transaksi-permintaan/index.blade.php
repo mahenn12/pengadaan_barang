@@ -12,7 +12,7 @@
 
     <div class="row">
         <div class="col-lg-12">
-            <h1 class="page-header">Transaksi Permintaan</h1>
+            <h1 class="page-header">Halaman Permintaan</h1>
         </div>
     </div><!--/.row-->
 @endsection

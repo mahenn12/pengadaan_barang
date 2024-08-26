@@ -39,17 +39,17 @@
             <table id="transaksi-pengadaan" class="table table-bordered table-striped table-hover">
                 <thead>
                     <tr>
-                        <th class="text-center">No</th>
-                        <th class="text-center">Tanggal Pengadaan</th>
-                        <th class="text-center">Tanggal Permintaan</th>
-                        <th class="text-center">Barang</th>
-                        <th class="text-center">Pelanggan</th>
-                        <th class="text-center">Jumlah Minta</th>
-                        <th class="text-center">Total</th>
-                        <th class="text-center">Keterangan</th>
-                        <th class="text-center">Status</th>
-                        <th class="text-center">Bukti Acc</th>
-                        <th class="text-center">Aksi</th>
+                        <th style="text-align: center;">No</th>
+                        <th style="text-align: center;">Tanggal Pengadaan</th>
+                        <th style="text-align: center;">Tanggal Permintaan</th>
+                        <th style="text-align: center;">Barang</th>
+                        <th style="text-align: center;">Pelanggan</th>
+                        <th style="text-align: center;">Jumlah Minta</th>
+                        <th style="text-align: center;">Total</th>
+                        <th style="text-align: center;">Keterangan</th>
+                        <th style="text-align: center;">Status</th>
+                        <th style="text-align: center;">Bukti Acc</th>
+                        <th style="text-align: center;">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -59,10 +59,10 @@
                         <td class="text-center">{{$no++}}</td>
                         <td class="text-center">{{$data->tanggal_pengadaan}}</td>
                         <td class="text-center">{{$data->tanggal_permintaan}}</td>
-                        <td class="text-center">{{$data->barang->nama}}</td>
-                        <td class="text-center">{{$data->pelanggan->nama}}</td>
+                        <td class="text-center">{{$data->barang->nama_barang}}</td>
+                        <td class="text-center">{{$data->supplier->nama_supplier}}</td>
                         <td class="text-center">{{$data->jumlah_minta}}</td>
-                        <td class="text-center">{{ number_format($data->total, 2) }}</td>
+                        <td class="text-center">{{ number_format($data->total, ) }}</td>
                         <td class="text-center">{{$data->keterangan}}</td>
                         <td class="text-center">{{$data->status}}</td>
                         <td class="text-center"><img src="{{ Storage::url($data->bukti_acc) }}" height="50" width="50"></td>

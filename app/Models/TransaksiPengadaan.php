@@ -12,15 +12,20 @@ class TransaksiPengadaan extends Model
 
     // Specify the table name
     protected $table = 'transaksi_pengadaan';
-    protected $fillable = [
-        'tanggal_pengadaan', 
-        'tanggal_permintaan', 
-        'barang_id', 
-        'pelanggan_id',
-        'jumlah_minta', 
-        'total', 'keterangan', 
-        'status', 'bukti_acc'
-    ];
+    // protected $fillable = [
+    //     'tgl_pengadaan',
+    //     'tgl_permintaan',
+    //     'barang_id',
+    //     'pelanggan_id',
+    //     'jumlah_minta',
+    //     'total',
+    //     'keterangan',
+    //     'status',
+    //     'bukti_acc',
+    // ];
+
+    protected $guarded = [];
+
 
     public function barang()
     {
@@ -29,6 +34,6 @@ class TransaksiPengadaan extends Model
 
     public function supplier()
     {
-        return $this->belongsTo(Supplier::class, 'pelanggan');
+        return $this->belongsTo(Supplier::class, 'pelanggan_id');
     }
 }

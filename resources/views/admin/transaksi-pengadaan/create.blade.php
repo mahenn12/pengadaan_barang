@@ -23,6 +23,15 @@
         <a href="{{ route('transaksi-pengadaan.index') }}" class="btn btn-default" style="float: right;"><span class="fa fa-arrow-left">&nbsp;</span> Kembali</a>
     </div>
     <div class="panel-body">
+    @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+    @endif
         <div class="col-md-12">
             <form role="form" action="{{ route('transaksi-pengadaan.store') }}" method="post" enctype="multipart/form-data">
             @csrf
@@ -36,7 +45,7 @@
                 </div>
                 <div class="form-group">
                     <label>Barang</label>
-                    <select class="form-control" id="barang" name="barang" required onchange="updateTotal()">
+                    <select class="form-control" id="barang" name="barang_id" required onchange="updateTotal()">
                         <option value="">Pilih Barang</option>
                         @foreach ($barang as $barang)
                             <option value="{{ $barang->id }}" data-harga="{{ $barang->harga_jual }}">{{ $barang->nama_barang }}</option>
@@ -45,7 +54,7 @@
                 </div>
                 <div class="form-group">
                     <label>Pelanggan</label>
-                    <select class="form-control" id="pelanggan" name="pelanggan" required>
+                    <select class="form-control" id="pelanggan" name="pelanggan_id" required>
                         <option value="">Pilih Pelanggan</option>
                         @foreach ($suppliers as $supplier)
                             <option value="{{ $supplier->id }}">{{ $supplier->nama_supplier }}</option>
@@ -58,15 +67,15 @@
                 </div>
                 <div class="form-group">
                     <label>Total Permintaan</label>
-                    <input type="text" class="form-control" id="total" name="total" readonly>
+                    <input type="text" class="form-control" id="total" name="total_permintaan" readonly>
                 </div>
                 <div class="form-group">
                     <label>Keterangan</label>
-                    <textarea class="form-control" id="keterangan" name="keterangan"></textarea>
+                    <textarea class="form-control" id="keterangan" name="keterangan" required></textarea>
                 </div>
                 <div class="form-group">
                     <label>Status Permintaan</label>
-                    <select class="form-control" id="status_permintaan" name="status_permintaan" required>
+                    <select class="form-control" id="status_permintaan" name="status" required>
                         <option value="">Pilih Status</option>
                         <option value="Pending">Pending</option>
                         <option value="Approved">Approved</option>

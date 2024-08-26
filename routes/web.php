@@ -125,10 +125,10 @@ Route::group(['prefix' => 'pengadaanbarang', 'middleware' => ['auth']], function
     ->middleware(['role:admin|petugas']);
 
     Route::resource('transaksi-permintaan', TransaksiPermintaanController::class)
-    ->middleware(['role:admin|petugas']);
+    ->middleware(['role:admin']);
 
     Route::resource('transaksi-pengadaan', TransaksiPengadaanController::class)
-    ->middleware(['role:admin']);
+    ->middleware(['role:petugas']);
 });
 
 Route::post('/transaksi-pengadaan', [TransaksiPengadaanController::class, 'store'])->name('transaksi.store');

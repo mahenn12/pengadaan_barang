@@ -12,7 +12,10 @@
     <div class="divider"></div>
     <ul class="nav menu">
         <li class="{{ Request::is('home')? "active":"" }}"><a href="/home"><em class="fa fa-dashboard">&nbsp;</em> Dashboard</a></li>
+
+
         <li class="{{ Request::is('supplier')? "active":"" }}"><a href="/pengadaanbarang/supplier"><em class="fa fa-users">&nbsp;</em> Supplier</a></li>
+
         <li class="parent "><a data-toggle="collapse" href="#sub-item-1">
             <em class="fa fa-archive">&nbsp;</em> Barang <span data-toggle="collapse" href="#sub-item-1" class="icon pull-right"><em class="fa fa-plus"></em></span>
             </a>
@@ -28,16 +31,19 @@
                 </a></li>
             </ul>
         </li>
+
         <li class="{{ Request::is('barang-masuk')? "active":"" }}"><a href="/pengadaanbarang/barang-masuk" ><em class="fa fa-download">&nbsp;</em> Barang Masuk</a></li>
         <li  class="{{ Request::is('barang-keluar')? "active":"" }}"><a href="/pengadaanbarang/barang-keluar"><em class="fa fa-upload">&nbsp;</em> Barang Keluar</a></li>
+
+        @if (auth()->user()->hasRole('admin'))
         <li class="{{ Request::is('pengadaanbarang/transaksi-permintaan') ? 'active' : '' }}">
             <a href="{{ route('transaksi-permintaan.index') }}">
                 <em class="fa fa-shopping-cart">&nbsp;</em> Transaksi Permintaan
             </a>
         </li>
+        @endif
 
-        {{-- Only display the link if the user is an "admin" --}}
-        @if(Auth::user()->role = 'petugas')
+        @if (auth()->user()->hasRole('petugas'))
             <li class="{{ Request::is('pengadaanbarang/transaksi-pengadaan') ? 'active' : '' }}">
                 <a href="{{ route('transaksi-pengadaan.index') }}">
                     <em class="fa fa-shopping-cart">&nbsp;</em> Transaksi Pengadaan
@@ -49,11 +55,13 @@
         <li  class="{{ Request::is('cetak-laporan')? "active":"" }}"><a href="/pengadaanbarang/cetak-laporan"><em class="fa fa-print">&nbsp;</em> Cetak Laporan</a></li>
 
         <!-- User Management - Always visible -->
+        @if (auth()->user()->hasRole('admin'))
         <li class="{{ Request::is('user-management') ? 'active' : '' }}">
             <a href="/pengadaanbarang/user-management">
                 <em class="fa fa-user">&nbsp;</em> User Management
             </a>
         </li>
+        @endif
 
         <!-- Logout -->
                 <li class=""><a href="{{ route('logout') }}" onclick="event.preventDefault();

@@ -6,13 +6,13 @@
             <li><a href="#">
                 <em class="fa fa-home"></em>
             </a></li>
-            <li class="active">Transaksi Permintaan</li>
+            <li class="active">Transaksi Pengadaan</li>
         </ol>
     </div><!--/.row-->
 
     <div class="row">
         <div class="col-lg-12">
-            <h1 class="page-header">Edit Transaksi Permintaan</h1>
+            <h1 class="page-header">Edit Transaksi Pengadaan</h1>
         </div>
     </div><!--/.row-->
 @endsection
@@ -20,17 +20,21 @@
 @section('content')
 
 <div class="panel panel-default col-md-12">
-    <div class="panel-heading"> Edit Transaksi Permintaan
-        <a href="{{ route('transaksi-permintaan.index') }}" class="btn btn-default" style="float: right;"><span class="fa fa-arrow-left">&nbsp;</span> Kembali</a>
+    <div class="panel-heading"> Edit Transaksi Pengadaan
+        <a href="{{ route('transaksi-pengadaan.index') }}" class="btn btn-default" style="float: right;"><span class="fa fa-arrow-left">&nbsp;</span> Kembali</a>
     </div>
     <div class="panel-body">
         <div class="col-md-12">
-            <form role="form" action="{{ route('transaksi-permintaan.update', $transaksi->id) }}" method="post">
+            <form role="form" action="{{ route('transaksi-pengadaan.update', $transaksi->id) }}" method="post">
             @csrf
             @method('put')
                 <div class="form-group">
+                    <label>Tanggal Pengadaan</label>
+                    <input value={{$transaksi->tanggal_pengadaan}} type="date" name=tanggal_pengadaan class="form-control">
+                </div>
+                <div class="form-group">
                     <label>Tanggal Permintaan</label>
-                    <input value={{$transaksi->tgl_permintaan}} type="date" name=tanggal_permintaan class="form-control">
+                    <input value={{$transaksi->tanggal_permintaan}} type="date" name=tanggal_permintaan class="form-control">
                 </div>
                 <div class="form-group">
                     <label>Barang</label>
@@ -45,8 +49,8 @@
                     <label>Pelanggan</label>
                     <select class="form-control" id="pelanggan" name="pelanggan" required>
                         <option value="">Pilih Pelanggan</option>
-                        @foreach ($suppliers as $item)
-                            <option value="{{ $item->id }}" {{ $item->id == $transaksi->pelanggan_id ? 'selected' : '' }}>{{ $item->nama_supplier }}</option>
+                        @foreach ($suppliers as $supplier)
+                            <option value="{{ $supplier->id }}" {{ $supplier->id == $transaksi->pelanggan_id ? 'selected' : '' }}>{{ $supplier->nama_supplier }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -64,10 +68,15 @@
                 </div>
                 <div class="form-group">
                     <label>Status Permintaan</label>
-                    <select name="status_permintaan" class="form-control" required>
-                        <option value="Sedang diproses" {{ $transaksi->status_permintaan == 'Sedang diproses' ? 'selected' : '' }}>Sedang diproses</option>
-                        <option value="Selesai" {{ $transaksi->status_permintaan == 'Selesai' ? 'selected' : '' }}>Selesai</option>
+                    <select class="form-control" id="status_permintaan" name="status" required>
+                        <option value="Pending" {{ $transaksi->status == 'Pending' ? 'selected' : '' }}>Pending</option>
+                        <option value="Approved" {{ $transaksi->status == 'Approved' ? 'selected' : '' }}>Approved</option>
+                        <option value="Rejected" {{ $transaksi->status == 'Rejected' ? 'selected' : '' }}>Rejected</option>
                     </select>
+                </div>
+                <div class="form-group">
+                    <label>Bukti Acc</label>
+                    <input type="file" class="form-control" id="bukti_acc" name="bukti_acc" accept="image/*" onchange="previewImage(event)" placeholder="Gambar">
                 </div>
                 <div class="form-group">
                     <button class="btn btn-primary" type="submit">Simpan</button>
@@ -100,12 +109,25 @@
         document.getElementById("total_permintaan").value = "Rp " + total.toLocaleString('id-ID');
     }
 
+
     // Debugging: Log values to console to check if they are being retrieved correctly
     document.getElementById("barang").addEventListener('change', function() {
         console.log("Selected harga:", document.getElementById("harga_jual_satuan").value);
     });
     document.getElementById("jumlah_minta").addEventListener('input', function() {
         console.log("Calculated total:", document.getElementById("total_permintaan").value);
+    });
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+<script>
+    $(document).ready(function() {
+        $('.custom-date').datepicker({
+            format: 'mm/dd/yyyy',
+            autoclose: true,
+            todayHighlight: true
+        });
     });
 </script>
 
