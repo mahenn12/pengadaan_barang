@@ -52,7 +52,6 @@
                         <td>{{$item->pelanggan}}</td>
                         <td>{{$item->keterangan}}</td>
                         <td>{{$item->status_permintaan}}</td>
-                        <td><center>{{$data->qty}}</center></td>
                     </tr>
                     @endforeach
         </tbody>
